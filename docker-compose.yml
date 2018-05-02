@@ -1,0 +1,241 @@
+version: '3.3'
+
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/24
+
+services:
+  cerebro:
+    image: polinux/cerebro
+    environment:
+      - ES_ADDRESS="es-ingest"
+      - ES_PORT="9200"
+      - ES_NAME="es-docker-ingest"
+    ports:
+      - "9000:9000"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.9
+  
+  es-ingest:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-ingest
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-ingest
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/ingest.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.10
+
+  es-master-1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-master-1
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-master-1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/master.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9201:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.11
+
+  es-master-2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-master-2
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-master-2
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/master.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9202:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.12
+
+  es-master-3:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-master-3
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-master-3
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/master.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9203:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.13
+
+  es-data-1:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-data-1
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-data-1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/data.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9204:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.14
+
+  es-data-2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-data-2
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-data-2
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/data.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9205:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.15
+
+  es-data-3:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-data-3
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-data-3
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/data.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9206:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.16
+
+  es-data-4:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-data-4
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-data-4
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/data.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9207:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.17
+
+  es-data-5:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-data-5
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-data-5
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/data.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9208:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.18
+
+  es-data-6:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.3
+    container_name: es-data-6
+    environment:
+      - cluster.name=es-docker
+      - node.name=es-data-6
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./config/data.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9209:9200
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.19

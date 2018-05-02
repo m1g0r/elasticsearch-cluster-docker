@@ -1,0 +1,26 @@
+cluster.name: "es-docker"
+node.data: 'true'
+node.master: 'false'
+node.ingest: 'false'
+network.host: 0.0.0.0
+network.bind_host: 0.0.0.0
+http.port: 9200
+transport.tcp.compress: 'true'
+discovery.zen.ping.unicast.hosts:
+- 10.5.0.10
+- 10.5.0.11
+- 10.5.0.12
+- 10.5.0.13
+- 10.5.0.14
+- 10.5.0.15
+- 10.5.0.16
+- 10.5.0.17
+- 10.5.0.18
+- 10.5.0.19
+discovery.zen.minimum_master_nodes: 3
+gateway.recover_after_nodes: 3
+bootstrap.memory_lock: 'true'
+indices.queries.cache.size: 30%
+indices.memory.index_buffer_size: 40%
+indices.fielddata.cache.size: 30%
+indices.requests.cache.size: 2%
